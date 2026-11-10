@@ -273,6 +273,33 @@ html.js .pmass.in:hover .viz i{animation:wave 1.4s ease-in-out infinite;animatio
 .dr-item .go{width:17px;height:17px;opacity:.5}
 /* ===== akhir Pencarian ===== */
 
+/* ===== Jelajah Drive ===== */
+.fb{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.fb-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1rem;padding:.9rem 1.1rem;background:linear-gradient(180deg,#eef6f0,#fff);border-bottom:1px solid var(--line)}
+.fb-crumbs{flex:1 1 220px;display:flex;flex-wrap:wrap;align-items:center;gap:.25rem .4rem;font-size:.9rem;color:var(--muted)}
+.fb-crumbs button{border:0;background:none;font:inherit;color:var(--green-700);font-weight:600;cursor:pointer;padding:.15rem .3rem;border-radius:6px}
+.fb-crumbs button:hover{background:var(--green-100)}
+.fb-crumbs button[aria-current]{color:var(--ink);cursor:default}
+.fb-crumbs button[aria-current]:hover{background:none}
+.fb-bar input{flex:0 1 240px;min-width:0;border:1.5px solid var(--line);border-radius:999px;padding:.5rem 1rem;font:inherit;font-size:.9rem;background:#fff;outline:0;transition:border-color .25s,box-shadow .25s}
+.fb-bar input:focus{border-color:var(--green-700);box-shadow:0 0 0 3px rgba(22,101,52,.14)}
+.fb-list{max-height:min(70vh,640px);overflow:auto}
+.fb-row{
+  width:100%;display:flex;align-items:center;gap:.8rem;padding:.7rem 1.1rem;border:0;border-top:1px solid var(--line);
+  background:none;font:inherit;text-align:left;color:inherit;cursor:pointer;transition:background .2s;
+  animation:itemIn .5s cubic-bezier(.22,1,.36,1) backwards;animation-delay:calc(var(--i)*30ms);
+}
+.fb-row:first-child{border-top:0}
+.fb-row:hover,.fb-row:focus-visible{background:var(--green-100)}
+.fb-row .ico{color:var(--green-700)}
+.fb-name{flex:1;min-width:0;font-weight:500;font-size:.9375rem;overflow-wrap:anywhere}
+.fb-meta{flex:none;font-size:.78rem;color:var(--muted);text-align:right}
+.fb-row .go{width:17px;height:17px;opacity:.45;transition:opacity .2s,transform .3s}
+.fb-row:hover .go{opacity:1;transform:translateX(3px)}
+.fb-msg{margin:0;padding:1.4rem 1.1rem;color:var(--muted);font-size:.9375rem}
+@media(max-width:560px){.fb-meta{display:none}}
+/* ===== akhir Jelajah Drive ===== */
+
 /* Footer: kontak + peta + hak cipta */
 .footer{
   position:relative;color:#d5e6da;border-top:5px solid var(--gold);
