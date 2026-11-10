@@ -326,6 +326,20 @@ html.js .pmass.in:hover .viz i{animation:wave 1.4s ease-in-out infinite;animatio
 .fb-more[hidden]{display:none}
 .dr-deep{display:block;width:100%;border:0;border-top:1px solid var(--line);padding:.85rem 1.1rem;background:#f6faf7;font:inherit;font-weight:600;font-size:.875rem;color:var(--green-700);cursor:pointer;text-align:left;transition:background .25s}
 .dr-deep:hover{background:var(--green-100)}
+/* Jelajah Drive: tertutup di awal, dibuka dengan klik */
+.fb-toggle{width:100%;display:flex;align-items:center;gap:.875rem;padding:1rem 1.125rem;background:linear-gradient(180deg,#eef6f0,#fff);border:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.fb-toggle:focus-visible{outline:3px solid var(--gold);outline-offset:-3px;border-radius:var(--r-lg)}
+.fb-toggle:hover .badge{box-shadow:0 0 0 6px rgba(22,101,52,.12)}
+.fb-toggle-t{flex:1;font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:1.125rem;color:var(--green-800)}
+.fb.open .badge{background:var(--green-700);color:#fff;transform:rotate(360deg) scale(1.06);box-shadow:0 0 0 7px rgba(224,184,62,.35)}
+.fb.open .chev{transform:rotate(180deg);color:var(--green-700)}
+.fb-body{display:grid;grid-template-rows:1fr;border-top:1px solid transparent;transition:grid-template-rows var(--close-dur) var(--ease-soft),border-color .4s}
+.fb.open .fb-body{transition-duration:var(--open-dur),.4s;border-top-color:var(--line)}
+.fb-body-in{overflow:hidden;min-height:0}
+html.js .fb:not(.open) .fb-body{grid-template-rows:0fr}
+html.js .fb:not(.open) .fb-body-in{visibility:hidden;transition:visibility 0s linear var(--close-dur)}
+.fb-tabs button:focus{outline:none}
+.fb-tabs button:focus-visible{outline:2px solid var(--green-700);outline-offset:-2px;border-radius:999px}
 /* ===== akhir Jelajah Drive ===== */
 
 /* Footer: kontak + peta + hak cipta */
