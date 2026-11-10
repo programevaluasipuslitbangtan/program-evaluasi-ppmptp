@@ -203,7 +203,7 @@ document.querySelectorAll(".toggle").forEach(function(b){
 <script>
 /* ===== Pencarian ===== */
 // Tempel alamat Aplikasi Web Google Apps Script di sini untuk mengaktifkan pencarian isi Google Drive.
-var DRIVE_SEARCH_URL = "";
+var DRIVE_SEARCH_URL = "https://script.google.com/macros/s/AKfycbyJp763Pi63tcuJtqANVmWrtRE07kc6lPvj8zd21RAG/dev";
 
 (function(){
   var q=document.getElementById("q"),info=document.getElementById("searchInfo"),
@@ -237,20 +237,30 @@ var DRIVE_SEARCH_URL = "";
     a.querySelector("b").textContent=r.name;a.querySelector("small").textContent=r.path;return a;
   }
   function say(t){box.hidden=false;box.textContent="";var p=document.createElement("p");p.className="dr-msg";p.textContent=t;box.appendChild(p)}
+  function show(d){
+    if(!d.results.length){say("Tidak ditemukan di Google Drive.");return}
+    box.textContent="";var h=document.createElement("p");h.className="dr-head";
+    h.textContent=d.results.length+" hasil di Google Drive"+(d.truncated?" (ditampilkan sebagian, perjelas kata kunci)":"");
+    box.appendChild(h);d.results.forEach(function(r){box.appendChild(row(r))});
+  }
+  function run(v,key,retry){
+    var url=DRIVE_SEARCH_URL+"?q="+encodeURIComponent(v)+(key?"&key="+encodeURIComponent(key):"");
+    return fetch(url).then(function(r){return r.json()}).then(function(d){
+      if(d.needKey){            // skrip meminta kode tim
+        sessionStorage.removeItem("kodeTim");
+        if(!retry){say("Kode tim salah. Coba lagi.");return}
+        var k=prompt("Masukkan kode tim untuk mencari di Google Drive:");
+        if(!k){say("Pencarian dibatalkan.");return}
+        sessionStorage.setItem("kodeTim",k);return run(v,k,false);
+      }
+      if(d.error){say(d.error);return}
+      show(d);
+    });
+  }
   function drive(){
     var v=q.value.trim(); if(v.length<2){say("Ketik minimal 2 huruf.");return}
-    var key=sessionStorage.getItem("kodeTim")||prompt("Masukkan kode tim untuk mencari di Google Drive:");
-    if(!key) return; sessionStorage.setItem("kodeTim",key);
     btn.disabled=true;say("Mencari di Google Drive...");
-    fetch(DRIVE_SEARCH_URL+"?q="+encodeURIComponent(v)+"&key="+encodeURIComponent(key))
-      .then(function(r){return r.json()})
-      .then(function(d){
-        if(d.error){sessionStorage.removeItem("kodeTim");say(d.error);return}
-        if(!d.results.length){say("Tidak ditemukan di Google Drive.");return}
-        box.textContent="";var h=document.createElement("p");h.className="dr-head";
-        h.textContent=d.results.length+" hasil di Google Drive"+(d.truncated?" (ditampilkan sebagian, perjelas kata kunci)":"");
-        box.appendChild(h);d.results.forEach(function(r){box.appendChild(row(r))});
-      })
+    run(v,sessionStorage.getItem("kodeTim")||"",true)
       .catch(function(){say("Pencarian gagal. Coba lagi sebentar lagi.")})
       .then(function(){btn.disabled=false});
   }
