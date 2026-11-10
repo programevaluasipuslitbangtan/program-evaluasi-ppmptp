@@ -298,6 +298,34 @@ html.js .pmass.in:hover .viz i{animation:wave 1.4s ease-in-out infinite;animatio
 .fb-row:hover .go{opacity:1;transform:translateX(3px)}
 .fb-msg{margin:0;padding:1.4rem 1.1rem;color:var(--muted);font-size:.9375rem}
 @media(max-width:560px){.fb-meta{display:none}}
+/* tab + daftar semua file */
+.fb-tabs{display:flex;gap:.25rem;padding:.5rem .6rem 0;background:#eef6f0;border-bottom:1px solid var(--line)}
+.fb-tabs button{border:0;background:none;font:inherit;font-weight:600;font-size:.9rem;color:var(--muted);padding:.65rem 1.1rem;border-radius:10px 10px 0 0;cursor:pointer;transition:background .25s,color .25s}
+.fb-tabs button:hover{color:var(--green-800)}
+.fb-tabs button.is-on{background:#fff;color:var(--green-800);box-shadow:0 -2px 0 var(--gold) inset}
+.fb-info{flex:1 1 220px;margin:0;font-size:.875rem;color:var(--muted)}
+.fb-bar select{border:1.5px solid var(--line);border-radius:999px;padding:.5rem .9rem;font:inherit;font-size:.875rem;background:#fff;color:var(--ink)}
+.fb-prog{height:3px;background:var(--green-100);overflow:hidden}
+.fb-prog[hidden]{display:none}
+.fb-prog i{display:block;width:35%;height:100%;background:linear-gradient(90deg,var(--gold),var(--green-700));animation:prog 1.2s ease-in-out infinite}
+@keyframes prog{from{transform:translateX(-100%)}to{transform:translateX(300%)}}
+.fb-name b{display:block;font-weight:500;font-size:.9375rem}
+.fb-name small{display:block;color:var(--muted);font-size:.78rem;font-weight:400;overflow-wrap:anywhere}
+.fb-more{display:block;width:100%;border:0;border-top:1px solid var(--line);background:#fff;padding:.9rem;font:inherit;font-weight:600;color:var(--green-700);cursor:pointer}
+.fb-more:hover{background:var(--green-100)}
+.fb-more[hidden]{display:none}
+.fb-tabs{display:flex;gap:.35rem;padding:.7rem 1.1rem 0;background:linear-gradient(180deg,#eef6f0,#f6faf7)}
+.fb-tabs button{border:0;border-radius:999px 999px 0 0;padding:.55rem 1.1rem;background:transparent;font:inherit;font-weight:600;font-size:.875rem;color:var(--muted);cursor:pointer;transition:background .25s,color .25s}
+.fb-tabs button:hover{color:var(--green-800)}
+.fb-tabs button[aria-selected="true"]{background:#fff;color:var(--green-800);box-shadow:0 -2px 0 var(--gold) inset}
+.fb-tabs+.fb-bar{background:#fff;border-top:0}
+.fb-foot{padding:0}
+.fb-more{display:block;width:100%;border:0;border-top:1px solid var(--line);padding:.9rem 1.1rem;background:#f6faf7;font:inherit;font-weight:600;font-size:.9rem;color:var(--green-700);cursor:pointer;transition:background .25s}
+.fb-more:hover{background:var(--green-100)}
+.fb-more:disabled{opacity:.6;cursor:wait}
+.fb-more[hidden]{display:none}
+.dr-deep{display:block;width:100%;border:0;border-top:1px solid var(--line);padding:.85rem 1.1rem;background:#f6faf7;font:inherit;font-weight:600;font-size:.875rem;color:var(--green-700);cursor:pointer;text-align:left;transition:background .25s}
+.dr-deep:hover{background:var(--green-100)}
 /* ===== akhir Jelajah Drive ===== */
 
 /* Footer: kontak + peta + hak cipta */
