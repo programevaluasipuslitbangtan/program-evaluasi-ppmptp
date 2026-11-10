@@ -218,7 +218,7 @@ document.querySelectorAll(".toggle").forEach(function(b){
 <script>
 /* ===== Pencarian ===== */
 // Tempel alamat Aplikasi Web Google Apps Script di sini untuk mengaktifkan pencarian isi Google Drive.
-var DRIVE_SEARCH_URL = "https://script.google.com/macros/s/AKfycbzWOPN6MB2Gwc4hbznutNbwUW2LaUPcVFBHZVcZRpK0Ke-F_2TrdrLSHh2aKIO5_TeL9A/exec";
+var DRIVE_SEARCH_URL = "https://script.google.com/macros/s/AKfycbyJp763Pi63tcuJtqANVmWrtRE07kc6lPvj8zd21RAG/exec";
 
 (function(){
   var q=document.getElementById("q"),info=document.getElementById("searchInfo"),
@@ -248,14 +248,14 @@ var DRIVE_SEARCH_URL = "https://script.google.com/macros/s/AKfycbzWOPN6MB2Gwc4hb
 
   function row(r){
     var a=document.createElement("a");a.className="dr-item";a.href=r.url;a.target="_blank";a.rel="noopener";
-    a.innerHTML='<svg class="ico" aria-hidden="true"><use href="#'+(r.type==="folder"?"i-folder":"i-doc")+'"/></svg><span class="dr-main"><b></b><small></small></span><svg class="ico go" aria-hidden="true"><use href="#i-out"/></svg>';
-    a.querySelector("b").textContent=r.name;a.querySelector("small").textContent=r.path;return a;
+    a.innerHTML='<svg class="ico" aria-hidden="true"><use href="#'+(r.type==="folder"?"i-folder":/image|video/.test(r.mime||"")?"i-img":/sheet|excel/.test(r.mime||"")?"i-doc2":"i-doc")+'"/></svg><span class="dr-main"><b></b><small></small></span><svg class="ico go" aria-hidden="true"><use href="#i-out"/></svg>';
+    a.querySelector("b").textContent=r.name;a.querySelector("small").textContent=r.path+(r.updated?" \u00b7 diubah "+new Date(r.updated).toLocaleDateString("id-ID",{day:"2-digit",month:"short",year:"numeric"}):"");return a;
   }
   function say(t){box.hidden=false;box.textContent="";var p=document.createElement("p");p.className="dr-msg";p.textContent=t;box.appendChild(p)}
   function show(d){
     if(!d.results.length){say("Tidak ditemukan di Google Drive.");return}
     box.textContent="";var h=document.createElement("p");h.className="dr-head";
-    h.textContent=d.results.length+" hasil di Google Drive"+(d.truncated?" (ditampilkan sebagian, perjelas kata kunci)":"");
+    h.textContent=d.results.length+" hasil di Google Drive (nama file dan isi dokumen)"+(d.truncated?" (ditampilkan sebagian, perjelas kata kunci)":"");
     box.appendChild(h);d.results.forEach(function(r){box.appendChild(row(r))});
   }
   function run(v,key,retry){
