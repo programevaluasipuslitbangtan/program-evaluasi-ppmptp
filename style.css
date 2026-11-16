@@ -340,6 +340,10 @@ html.js .fb:not(.open) .fb-body{grid-template-rows:0fr}
 html.js .fb:not(.open) .fb-body-in{visibility:hidden;transition:visibility 0s linear var(--close-dur)}
 .fb-tabs button:focus{outline:none}
 .fb-tabs button:focus-visible{outline:2px solid var(--green-700);outline-offset:-2px;border-radius:999px}
+.fb-stampbar{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.6rem 1.1rem;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted)}
+.fb-refresh{border:1.5px solid var(--green-700);border-radius:999px;padding:.3rem .9rem;background:#fff;color:var(--green-700);font:inherit;font-weight:600;font-size:.78rem;cursor:pointer;transition:background .25s,color .25s}
+.fb-refresh:hover{background:var(--green-700);color:#fff}
+.fb-refresh:disabled{opacity:.6;cursor:wait}
 /* ===== akhir Jelajah Drive ===== */
 
 /* Footer: kontak + peta + hak cipta */

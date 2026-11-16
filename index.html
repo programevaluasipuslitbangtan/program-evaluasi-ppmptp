@@ -171,6 +171,7 @@
         </div>
         <div class="fb-list" id="fbList" aria-live="polite"></div>
         <div class="fb-foot"><button type="button" class="fb-more" id="fbMore" hidden></button></div>
+        <div class="fb-stampbar"><span id="fbStamp"></span><button type="button" class="fb-refresh" id="fbRefresh" title="Ambil daftar file terbaru dari Drive">Segarkan</button></div>
         </div></div>
       </div>
     </section>
@@ -230,7 +231,7 @@ document.querySelectorAll(".toggle").forEach(function(b){
 <script>
 /* ===== Pencarian ===== */
 // Tempel alamat Aplikasi Web Google Apps Script di sini untuk mengaktifkan pencarian isi Google Drive.
-var DRIVE_SEARCH_URL = "https://script.google.com/macros/s/AKfycbzWOPN6MB2Gwc4hbznutNbwUW2LaUPcVFBHZVcZRpK0Ke-F_2TrdrLSHh2aKIO5_TeL9A/exec";
+var DRIVE_SEARCH_URL = "https://script.google.com/macros/s/AKfycbyJp763Pi63tcuJtqANVmWrtRE07kc6lPvj8zd21RAG/exec";
 
 (function(){
   var q=document.getElementById("q"),info=document.getElementById("searchInfo"),
@@ -273,7 +274,7 @@ var DRIVE_SEARCH_URL = "https://script.google.com/macros/s/AKfycbzWOPN6MB2Gwc4hb
   function show(d){
     if(!d.results.length){say("Tidak ditemukan di Google Drive.");deep();return}
     box.textContent="";var h=document.createElement("p");h.className="dr-head";
-    h.textContent=d.results.length+" hasil di Google Drive (nama file dan isi dokumen)"+(d.truncated?" (ditampilkan sebagian, perjelas kata kunci)":"");
+    h.textContent=d.results.length+" hasil di Google Drive"+(d.truncated?" (ditampilkan sebagian, perjelas kata kunci)":"");
     box.appendChild(h);d.results.forEach(function(r){box.appendChild(row(r))});deep();
   }
   function run(v,key,retry){
@@ -336,9 +337,11 @@ var DRIVE_SEARCH_URL = "https://script.google.com/macros/s/AKfycbzWOPN6MB2Gwc4hb
         sessionStorage.setItem("kodeTim",k);return api(params,false);
       }
       if(d.error)throw new Error(d.error);
+      if(d.indexedAt)stamp(d.indexedAt);
       return d;
     });
   }
+  function stamp(t){var s=new Date(t);$("fbStamp").textContent="Data Drive diperbarui "+fmtDate(t)+", "+s.toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"})}
   function fail(err){
     msg(err.message==="kode"?"Kode tim diperlukan untuk membuka file.":err.message==="format"
       ?"Skrip membalas halaman, bukan data. Pastikan alamat berakhiran /exec dan akses deployment diatur ke \u201cSiapa saja\u201d, lalu deploy versi baru."
@@ -425,12 +428,12 @@ var DRIVE_SEARCH_URL = "https://script.google.com/macros/s/AKfycbzWOPN6MB2Gwc4hb
     scanQ=q;tok=null;loadAll(true);
   });
 
-  // dipanggil dari tombol "Cari lebih dalam" di hasil pencarian atas
-  window.driveDeepSearch=function(q){
-    openCard(true);started=true;view="all";tabF.setAttribute("aria-selected","false");tabA.setAttribute("aria-selected","true");
-    filt.placeholder="Ketik nama lalu Enter untuk cari di seluruh Drive...";filt.value=q;scanQ=q;tok=null;
-    loadAll(true);sec.scrollIntoView({behavior:"smooth",block:"start"});
-  };
+  $("fbRefresh").addEventListener("click",function(){
+    var b=this;b.disabled=true;b.textContent="Memperbarui...";
+    api({mode:"refresh"},true).then(function(d){b.textContent="Segarkan";b.disabled=false;if(d.indexedAt)stamp(d.indexedAt);if(view==="folder")loadFolder();else loadAll(true)})
+      .catch(function(e){b.textContent="Segarkan";b.disabled=false;fail(e)});
+  });
+  // (tombol "Cari lebih dalam" tidak dipakai lagi: pencarian sudah mencocokkan potongan nama di seluruh indeks)
 
   function start(){if(!started){started=true;setView("folder")}}
   var card=$("fbCard"),tg=$("fbToggle"),tt=tg.querySelector(".fb-toggle-t");
